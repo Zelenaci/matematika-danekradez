@@ -2,20 +2,9 @@
 
 from os.path import basename, splitext
 import tkinter as tk
+import random
 
 # from tkinter import ttk
-
-
-class About(tk.Toplevel):
-    def __init__(self, parent):
-        super().__init__(parent, class_=parent.name)
-        self.config()
-
-        btn = tk.Button(self, text="Konec", command=self.close)
-        btn.pack()
-
-    def close(self):
-        self.destroy()
 
 
 class Application(tk.Tk):
@@ -30,12 +19,40 @@ class Application(tk.Tk):
         self.lbl.pack()
         self.btn = tk.Button(self, text="Quit", command=self.quit)
         self.btn.pack()
-        self.btn2 = tk.Button(self, text="About", command=self.about)
+        self.btn2 = tk.Button(self, text="Generuj", command=self.generuj)
         self.btn2.pack()
+    
 
-    def about(self):
-        window = About(self)
-        window.grab_set()
+    def plus(self):
+        self.cisloA = random.randint(1,99)
+        self.cisloB = random.randint(1,100-self.cisloA)
+        self.vysledek = self.cisloA + self.cisloB
+        self.lbl.config(text = (f"{self.cisloA} + {self.cisloB} = {self.vysledek} "))
+
+    def minus(self):
+        self.cisloA = random.randint(1,100)
+        self.cisloB = random.randint(1,self.cisloA)
+        self.vysledek = self.cisloA - self.cisloB
+        self.lbl.config(text = (f"{self.cisloA} - {self.cisloB} = {self.vysledek} "))
+
+    def krat(self):
+        self.cisloA = random.randint(1,9)
+        self.cisloB = random.randint(1,9)
+        self.vysledek = self.cisloA * self.cisloB
+        self.lbl.config(text = (f"{self.cisloA} * {self.cisloB} = {self.vysledek} "))
+
+    def deleno(self):
+        self.vysledek = random.randint(1,9)
+        self.cisloB = random.randint(1,9)
+        self.cisloA = self.vysledek * self.cisloB
+        self.lbl.config(text = (f"{self.vysledek} * {self.cisloB} = {self.cisloA}"))
+    
+    def generuj(self):
+        funkce =random.choice([self.plus, self.minus, self.krat, self.deleno])
+        funkce()
+
+
+
 
     def quit(self, event=None):
         super().quit()
